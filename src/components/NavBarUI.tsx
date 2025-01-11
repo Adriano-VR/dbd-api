@@ -89,10 +89,10 @@ export default function App() {
   
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="2xl">
+    <Navbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="2xl">
       <NavbarContent justify="center">
         <NavbarMenuToggle 
-            
+         
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden text-white "
     
@@ -159,11 +159,18 @@ export default function App() {
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`} >
-            <Link
-              className="w-full text-white capitalize"
+            <Link onClick={() => setIsMenuOpen(false)}
+              className="w-full text-[#D32F2F] capitalize"
               href={`/${item === 'characters' ? '/' : item}`}
             >
+              <span className='font-'
+              onClick={() => setOpcao(item)}
+              style={{
+                color: opcao === item ? "#D32F2F" : "#E0E0E0",
+              }}>
               {item}
+              </span>
+             
             </Link>
           </NavbarMenuItem>
         ))}
