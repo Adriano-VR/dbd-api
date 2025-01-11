@@ -1,15 +1,17 @@
 "use client";
 
+import React from "react";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
   Input,
 } from "@nextui-org/react";
-
 import Link from "next/link";
-import { useState } from "react";
 
 export const AcmeLogo = () => {
   return (
@@ -72,14 +74,34 @@ export const SearchIcon = ({
 };
 
 export default function App() {
-  const [opcao, setOpcao] = useState<string>("characters");
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const menuItems = [
+    "characters",
+    "perks",
+    "perkRandomiser ",
+   
+  ];
+
+  const [opcao, setOpcao] = React.useState<string>("characters");
+
+
+  
+
   return (
-    <Navbar isBordered maxWidth="2xl">
+    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="2xl">
       <NavbarContent justify="center">
-        <NavbarBrand className="mr-4">
+        <NavbarMenuToggle 
+            
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden text-white "
+    
+        />
+        <NavbarBrand>
           <AcmeLogo />
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-4">
+
+        <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
             <Link
               href="/"
@@ -93,8 +115,10 @@ export default function App() {
           </NavbarItem>
           <NavbarItem>
             <Link
+
               href="/perks"
               onClick={() => setOpcao("perks")}
+              
               style={{
                 color: opcao === "perks" ? "#D32F2F" : "#E0E0E0",
               }}
@@ -115,7 +139,6 @@ export default function App() {
           </NavbarItem>
         </NavbarContent>
       </NavbarContent>
-
       <NavbarContent as="div" className="items-center" justify="end">
         <Input
           classNames={{
@@ -133,6 +156,18 @@ export default function App() {
           type="search"
         />
       </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`} >
+            <Link
+              className="w-full text-white capitalize"
+              href={`/${item === 'characters' ? '/' : item}`}
+            >
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }
