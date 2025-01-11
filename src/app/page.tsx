@@ -1,11 +1,10 @@
 "use client"
 
 import { useEffect } from "react";
-import getData from './../http/http';
+import {getData} from './../http/http';
 import React from "react";
 import CardUI from "@/components/CardUI";
 import { DataItem } from "@/interface/int";
-import NavBarUI from "@/components/NavBarUI";
 import CircularProgressUI from "@/components/CircularProgress";
 
 
@@ -34,10 +33,8 @@ export default function Home() {
 
   
   return (
-    <>
-    <header className="flex w-full mb-6 ">
-      <NavBarUI />
-    </header>
+  
+  
       <main className="container mx-auto">
       <div className="flex justify-center items-center min-h-[70vh]">
         {data.length > 0 ? (
@@ -67,13 +64,9 @@ export default function Home() {
       )}
 
     </div>
-
-  
     </main>
    
-    
-
-    </>
+  
     
   );
 }

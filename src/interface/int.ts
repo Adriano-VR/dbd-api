@@ -14,3 +14,11 @@ export interface DataItem {
     image: string;
     perks: string[];
   }
+
+
+  export interface PerkItem {
+    name:string
+    image: string;
+    role: string;
+    description:string
+  }

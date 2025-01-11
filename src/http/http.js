@@ -2,8 +2,10 @@
 import axios from 'axios';
 
 const url = '/api/characters';
+const urlPerks = '/api/randomperks?role=survivor';
 
-const getData = async (retries = 3, delay = 1000) => {
+
+export const getData = async (retries = 3, delay = 1000) => {
     try {
         const response = await axios.get(url);
         return response.data;
@@ -19,4 +21,22 @@ const getData = async (retries = 3, delay = 1000) => {
     }
 };
 
-export default getData;
+
+
+export const getPerksRandom = async (retries = 3, delay = 1000) => {
+    try {
+        const response = await axios.get(urlPerks);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 429 && retries > 0) {
+            console.warn(`Retrying... (${retries} retries left)`);
+            await new Promise(res => setTimeout(res, delay));
+            return getPerksRandom(retries - 1, delay * 2);
+        } else {
+            console.error('Error fetching data:', error);
+            throw error;
+        }
+    }
+};
+
+

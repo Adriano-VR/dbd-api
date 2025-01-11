@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Nunito } from "next/font/google";
+import  NavBarUI from '@/components/NavBarUI';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,6 +21,10 @@ export default function RootLayout({
     <html lang="pt-br">
         <body className={`${nunito.className}  dark min-h-screen antialiased bg-[#121212]`}>
        <Providers>
+        <header className="mb-5">
+        <NavBarUI />
+        </header>
+       
           {children}
         </Providers>
     
