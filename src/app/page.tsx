@@ -3,33 +3,20 @@
 import { useEffect } from "react";
 import getData from './../http/http';
 import React from "react";
-import Image from "next/image";
+import CardUI from "@/components/CardUI";
+import { DataItem } from "@/interface/int";
+import NavBarUI from "@/components/NavBarUI";
+import CircularProgressUI from "@/components/CircularProgress";
+
 
 export default function Home() {
 
-  interface DataItem {
-    id: string;
-    name: string;
-    role: string;
-    difficulty: string;
-    gender: string;
-    height: string;
-    bio: string;
-    story: string;
-    tunables: unknown;
-    item: unknown;
-    outfit: string[];
-    dlc: unknown;
-    image: string;
-    perks: string[];
-  }
 
   const [data, setData] = React.useState<DataItem[]>([]);
   
   const fetchData = async () => {
     try {
       const response = await getData();
-      console.log('API response:', response);
       // Transformar o objeto em um array de itens
       const dataArray = Object.keys(response).map(key => ({
         id: key,
@@ -45,35 +32,48 @@ export default function Home() {
     fetchData();
   }, []);
 
-  console.log('Data state:', data);
   
   return (
-    <div>
-      <h1>DBD API</h1>
-      {data.length > 0 ? (
-        <ul>
-          {data.slice(0,4).
+    <>
+    <header className="flex w-full mb-6 ">
+      <NavBarUI />
+    </header>
+      <main className="container mx-auto">
+      <div className="flex justify-center items-center min-h-[70vh]">
+        {data.length > 0 ? (
+         
+          <div className="space-y-6">
+         
+         <ul className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-5 gap-4">
+          {data.filter(a => a.role === 'survivor').
+          slice(0,5).
           map((item,index) => (
-            <li key={index}>
-              <h2>{item.name}</h2>
-              <p>{item.role}</p>
-              <p>{item.difficulty}</p>
-              <p>{item.gender}</p>
-              <p>{item.height}</p>
-              <p>{item.bio}</p>
-              <p>{item.story}</p>
-              <Image src={ `/${item.name}_Portrait.webp`} alt={item.name} width={300} height={300} unoptimized />
-              <ul>
-                {item.perks.map(perk => (
-                  <li key={perk}>{perk}</li>
-                ))}
-              </ul>
-            </li>
+          <CardUI key={index} item={item} />
           ))}
         </ul>
+
+        <ul className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-5 gap-4">
+        {data.filter(a => a.role === 'killer').
+        slice(0,5).
+        map((item,index) => (
+        <CardUI key={index} item={item} />
+        ))}
+        </ul>
+        </div>
+       
+
       ) : (
-        <p>Loading...</p>
+        <CircularProgressUI />
       )}
+
     </div>
+
+  
+    </main>
+   
+    
+
+    </>
+    
   );
 }

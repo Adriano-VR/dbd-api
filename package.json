@@ -9,9 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/card": "^2.2.9",
+    "@nextui-org/navbar": "^2.2.8",
+    "@nextui-org/react": "^2.6.11",
+    "@nextui-org/system": "^2.4.6",
+    "@nextui-org/theme": "^2.4.5",
     "@types/express": "^5.0.0",
     "axios": "^1.7.9",
     "express": "^4.21.2",
+    "framer-motion": "^11.17.0",
     "http-proxy-middleware": "^3.0.3",
     "next": "15.1.4",
     "react": "^19.0.0",
