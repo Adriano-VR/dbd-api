@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { getPerksRandom } from '@/http/http'; 
 import CircularProgressUI from '@/components/CircularProgress';
 import { PerkItem } from '@/interface/int';
+import CardPerk from '@/components/CardPerks';
 
 const PerkRandomiser: React.FC = () => {
 
@@ -28,21 +29,26 @@ const PerkRandomiser: React.FC = () => {
   }, []);
 
     return (
-      <>
-      {perks.length > 0 ? (
-        <div className='text-white'>
+      <section className="container mx-auto px-5 sm:px-0 flex  min-h-[70vh] w-full justify-center">
+        <div className="w-full">
+        {perks.length > 0 ? (
+        <div className='grid grid-cols-1  xl:grid-cols-2 2xl:grid-cols-4 gap-4 '>
         {perks.map((perk, index) => (
-            <div key={index}>
-                <h1>{perk.name}</h1>
-               
-            </div>
+           <CardPerk key={index} item={perk} />
         ))}
-    </div>
+       </div>
 
       ) : (
-        <CircularProgressUI />
+        <div className='absolute inset-0 flex items-center justify-center'>
+          <CircularProgressUI />
+        </div>
+        
       )}
-        </>
+        </div>
+     
+
+      
+        </section>
     );
 };
 

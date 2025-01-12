@@ -35,7 +35,7 @@ export default function Home() {
   return (
   
   
-      <main className="container mx-auto">
+      <section className="container mx-auto">
       <div className="flex justify-center items-center min-h-[70vh]">
         {data.length > 0 ? (
          
@@ -64,7 +64,7 @@ export default function Home() {
       )}
 
     </div>
-    </main>
+    </section>
    
   
     
