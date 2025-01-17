@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Providers } from "./providers";
+import { NextUiProviders } from "./providers";
 import { Nunito } from "next/font/google";
 import  NavBarUI from '@/components/NavBarUI';
 
@@ -20,13 +20,13 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
         <body className={`${nunito.className}  dark min-h-screen antialiased bg-[#121212]`}>
-       <Providers>
+       <NextUiProviders>
         <header className="mb-5">
         <NavBarUI />
         </header>
        
           {children}
-        </Providers>
+        </NextUiProviders>
     
       </body>
     </html>

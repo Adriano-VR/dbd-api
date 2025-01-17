@@ -39,11 +39,12 @@ export default function Home() {
   const sliderSettings = {
     dots: false,
     infinite: false,
-    speed: 1000,
+    speed: 1500,
     slidesToShow: 5, // Número de slides padrão
     slidesToScroll: 5,
-    autoplay:false,
+    autoplay: true,
     arrows: false,
+  
     responsive: [
       {
         breakpoint: 1024, // Até 1024px (tablets)
@@ -68,6 +69,42 @@ export default function Home() {
       },
     ],
   };
+
+  const sliderSettingskiller = {
+    dots: false,
+    infinite: false,
+    speed: 1500,
+    slidesToShow: 5, // Número de slides padrão
+    slidesToScroll: 5,
+    autoplay: false,
+    arrows: false,
+  
+    responsive: [
+      {
+        breakpoint: 1024, // Até 1024px (tablets)
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 768, // Até 768px (dispositivos móveis)
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 480, // Até 480px (celulares pequenos)
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+        
+
   
   return (
   
@@ -76,20 +113,23 @@ export default function Home() {
      
         {data.length > 0 ? (
           <>
-          <div className="mb-5">
+          <div className="mb-3 ">
+          <h1 className='text-secondary text-xl font-bold tracking-wide ml-6 sm:ml-3 mb-3'>Survivors</h1>
             <Slider {...sliderSettings}>
               {data
                 .filter((a) => a.role === "survivor")
                 .map((item, index) => (
                   <div key={index}>
+                   
                     <CardUI item={item} />
                   </div>
                 ))}
             </Slider>
           </div>
         
-          <div>
-            <Slider {...sliderSettings}>
+          <>
+          <h1 className='text-secondary text-xl font-bold tracking-wide ml-6 sm:ml-3 mb-3'>Killers</h1>
+            <Slider {...sliderSettingskiller}>
               {data
                 .filter((a) => a.role === "killer")
                 .map((item, index) => (
@@ -98,7 +138,7 @@ export default function Home() {
                   </div>
                 ))}
             </Slider>
-          </div>
+          </>
         </>
         
          

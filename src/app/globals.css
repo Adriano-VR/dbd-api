@@ -28,7 +28,7 @@ body {
 
 @media (min-width: 1300px) {
   .slick-slide {
-    padding: 0 3px; /* Adicione mais espaço horizontal */
+    padding: 0 10px; /* Adicione mais espaço horizontal */
   }
 }
 
