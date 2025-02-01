@@ -1,63 +1,44 @@
-"use client"
+"use client";
 
-import { useEffect } from "react";
-import {getData} from './../http/http';
-import React from "react";
-import CardUI from "@/components/CardUI";
-import { DataItem } from "@/interface/int";
-import CircularProgressUI from "@/components/CircularProgress";
+import React, { useState } from "react";
 import Slider from "react-slick";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-
+import { useExampleContext } from "@/context/Context";
+import CircularProgressUI from "@/components/CircularProgress";
 
 export default function Home() {
+  const { data, loading } = useExampleContext();
+  const [activeIndex, setActiveIndex] = useState(0);
+const [partial, setPartial] = useState<any[]>([]);
+
+const oo = () => {
+
+  setPartial((prev) => [...prev, data.slice(0,5)]);
+}
 
 
-  const [data, setData] = React.useState<DataItem[]>([]);
-  
-  const fetchData = async () => {
-    try {
-      const response = await getData();
-      // Transformar o objeto em um array de itens
-      const dataArray = Object.keys(response).map(key => ({
-        id: key,
-        ...response[key]
-      }));
-      setData(dataArray);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const sliderSettings = {
-    dots: false,
-    infinite: false,
-    speed: 1500,
-    slidesToShow: 5, // Número de slides padrão
-    slidesToScroll: 5,
-    autoplay: true,
-    arrows: false,
-  
+  const settings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "60px",
+    slidesToShow: 3,
+    speed: 500,
+    beforeChange: (current, next) => setActiveIndex(next),
     responsive: [
       {
         breakpoint: 1024, // Até 1024px (tablets)
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 768, // Até 768px (dispositivos móveis)
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
         },
       },
       {
@@ -70,88 +51,32 @@ export default function Home() {
     ],
   };
 
-  const sliderSettingskiller = {
-    dots: false,
-    infinite: false,
-    speed: 1500,
-    slidesToShow: 5, // Número de slides padrão
-    slidesToScroll: 5,
-    autoplay: false,
-    arrows: false,
-  
-    responsive: [
-      {
-        breakpoint: 1024, // Até 1024px (tablets)
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        },
-      },
-      {
-        breakpoint: 768, // Até 768px (dispositivos móveis)
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 480, // Até 480px (celulares pequenos)
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-        
+  if (loading)
+    return (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <CircularProgressUI />
+      </div>
+    );
 
-  
   return (
-  
-  
-      <section className="container mx-auto">
-     
-        {data.length > 0 ? (
-          <>
-          <div className="mb-3 ">
-          <h1 className='text-secondary text-xl font-bold tracking-wide ml-6 sm:ml-3 mb-3'>Survivors</h1>
-            <Slider {...sliderSettings}>
-              {data
-                .filter((a) => a.role === "survivor")
-                .map((item, index) => (
-                  <div key={index}>
-                   
-                    <CardUI item={item} />
-                  </div>
-                ))}
-            </Slider>
-          </div>
-        
-          <>
-          <h1 className='text-secondary text-xl font-bold tracking-wide ml-6 sm:ml-3 mb-3'>Killers</h1>
-            <Slider {...sliderSettingskiller}>
-              {data
-                .filter((a) => a.role === "killer")
-                .map((item, index) => (
-                  <div key={index}>
-                    <CardUI item={item} />
-                  </div>
-                ))}
-            </Slider>
-          </>
-        </>
-        
-         
-      ) : (
-      <div className='absolute inset-0 flex items-center justify-center'>
-                <CircularProgressUI />
+    <section className='h-[80vh] flex items-center'>
+      <div className="slider-container container mx-auto">
+        <Slider {...settings}>
+          {data.slice(0,6)
+          .map((item, index) => (
+            <div
+              key={index}
+              className={`slide ${index === activeIndex ? "active" : ""}`}
+            >
+              <div className='flex items-center justify-center  flex-col'>
+                <h1>{item.name}</h1>
+                <img src="/dbdassets/Ace Visconti_Portrait.webp" alt={item.name} />
               </div>
-      )}
-
-   
+            </div>
+          ))}
+        </Slider>
+       
+      </div>
     </section>
-   
-  
-    
   );
 }

@@ -77,8 +77,8 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
+    "home",
     "characters",
-    "perks",
     "perkRandomiser ",
    
   ];
@@ -105,25 +105,25 @@ export default function App() {
           <NavbarItem>
             <Link
               href="/"
-              onClick={() => setOpcao("characters")}
+              onClick={() => setOpcao("home")}
               style={{
-                color: opcao === "characters" ? "#D32F2F" : "#E0E0E0",
+                color: opcao === "home" ? "#D32F2F" : "#E0E0E0",
               }}
             >
-              Characters
+              Home
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link
 
-              href="/perks"
-              onClick={() => setOpcao("perks")}
+              href="/characters"
+              onClick={() => setOpcao("characters")}
               
               style={{
-                color: opcao === "perks" ? "#D32F2F" : "#E0E0E0",
+                color: opcao === "characters" ? "#D32F2F" : "#E0E0E0",
               }}
             >
-              Perks
+              Characters
             </Link>
           </NavbarItem>
           <NavbarItem>
@@ -161,7 +161,7 @@ export default function App() {
           <NavbarMenuItem key={`${item}-${index}`} >
             <Link onClick={() => setIsMenuOpen(false)}
               className="w-full text-[#D32F2F] capitalize"
-              href={`/${item === 'characters' ? '/' : item}`}
+              href={`/${item === 'home' ? '/' : item}`}
             >
               <span className='font-'
               onClick={() => setOpcao(item)}
